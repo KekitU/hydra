@@ -155,4 +155,6 @@ contextBridge.exposeInMainWorld("electron", {
     ipcRenderer.on("on-signout", listener);
     return () => ipcRenderer.removeListener("on-signout", listener);
   },
+  getMagnetHealth: (magnet: string) =>
+    ipcRenderer.invoke("getMagnetHealth", magnet),
 });

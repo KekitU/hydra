@@ -12,6 +12,13 @@ import { format } from "date-fns";
 import { DownloadSettingsModal } from "./download-settings-modal";
 import { gameDetailsContext } from "@renderer/context";
 import { Downloader } from "@shared";
+import {
+  getRepackLanguageBasedOnRepacker,
+  isMultiplayerRepack,
+  supportMultiLanguage,
+} from "@renderer/helpers/searcher";
+import { useAppSelector } from "@renderer/hooks";
+import { SeedersAndPeers } from "../seeders-and-peers/seeders-and-peers";
 
 export interface RepacksModalProps {
   visible: boolean;
@@ -31,6 +38,9 @@ export function RepacksModal({
   const [filteredRepacks, setFilteredRepacks] = useState<GameRepack[]>([]);
   const [repack, setRepack] = useState<GameRepack | null>(null);
   const [showSelectFolderModal, setShowSelectFolderModal] = useState(false);
+  const { value: userPreferences } = useAppSelector(
+    (state) => state.userPreferences
+  );
 
   const [infoHash, setInfoHash] = useState<string | null>(null);
 
@@ -89,35 +99,47 @@ export function RepacksModal({
         </div>
 
         <div className={styles.repacks}>
-          {filteredRepacks.map((repack) => {
-            const isLastDownloadedOption =
-              infoHash !== null &&
-              repack.magnet.toLowerCase().includes(infoHash);
-
-            return (
-              <Button
-                key={repack.id}
-                theme="dark"
-                onClick={() => handleRepackClick(repack)}
-                className={styles.repackButton}
-              >
-                <p style={{ color: "#DADBE1", wordBreak: "break-word" }}>
-                  {repack.title}
-                </p>
-
-                {isLastDownloadedOption && (
-                  <Badge>{t("last_downloaded_option")}</Badge>
+          {filteredRepacks.map((repack) => (
+            <Button
+              key={repack.id}
+              theme="dark"
+              onClick={() => handleRepackClick(repack)}
+              className={styles.repackButton}
+            >
+              <p style={{ color: "#DADBE1", wordBreak: "break-word" }}>
+                {repack.title}
+              </p>
+              <div className={styles.torrentDataContainer}>
+                <div className={styles.badgesContainer}>
+                  {supportMultiLanguage(repack.title) && (
+                    <Badge>{t("multi_language")}</Badge>
+                  )}
+                  {isMultiplayerRepack(repack.title, repack.repacker) && (
+                    <Badge>{t("multiplayer")}</Badge>
+                  )}
+                  {repack.magnet.toLowerCase().includes(infoHash) && (
+                    <Badge>{t("last_downloaded_option")}</Badge>
+                  )}
+                </div>
+                <SeedersAndPeers repack={repack} />
+              </div>
+              <p style={{ fontSize: "12px" }}>
+                {repack.fileSize} - {repack.repacker} -{" "}
+                {repack.uploadDate
+                  ? format(repack.uploadDate, "dd/MM/yyyy")
+                  : ""}
+                {userPreferences?.language && (
+                  <>
+                    {" - " +
+                      getRepackLanguageBasedOnRepacker(
+                        repack.repacker,
+                        userPreferences?.language
+                      )}
+                  </>
                 )}
-
-                <p style={{ fontSize: "12px" }}>
-                  {repack.fileSize} - {repack.repacker} -{" "}
-                  {repack.uploadDate
-                    ? format(repack.uploadDate, "dd/MM/yyyy")
-                    : ""}
-                </p>
-              </Button>
-            );
-          })}
+              </p>
+            </Button>
+          ))}
         </div>
       </Modal>
     </>

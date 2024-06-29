@@ -133,6 +133,9 @@ declare global {
       displayName: string,
       newProfileImagePath: string | null
     ) => Promise<UserProfile>;
+    getMagnetHealth: (
+      magnet: string
+    ) => Promise<{ seeders: number; peers: number }>;
   }
 
   interface Window {

@@ -10,4 +10,5 @@ export * from "./checkbox-field/checkbox-field";
 export * from "./link/link";
 export * from "./select-field/select-field";
 export * from "./toast/toast";
+export * from "./tag/tag";
 export * from "./badge/badge";
