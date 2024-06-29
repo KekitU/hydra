@@ -32,17 +32,8 @@ export function BottomPanel() {
 
   const status = useMemo(() => {
     if (isGameDownloading) {
-      if (lastPacket?.isCheckingFiles)
-        return t("checking_files", {
-          title: lastPacket?.game.title,
-          percentage: progress,
-        });
-
       if (lastPacket?.isDownloadingMetadata)
-        return t("downloading_metadata", {
-          title: lastPacket?.game.title,
-          percentage: progress,
-        });
+        return t("downloading_metadata", { title: lastPacket?.game.title });
 
       if (!eta) {
         return t("calculating_eta", {
@@ -65,7 +56,6 @@ export function BottomPanel() {
     isGameDownloading,
     lastPacket?.game,
     lastPacket?.isDownloadingMetadata,
-    lastPacket?.isCheckingFiles,
     progress,
     eta,
     downloadSpeed,

@@ -1,12 +1,5 @@
+import type { Aria2Status } from "aria2";
 import type { DownloadSourceStatus, Downloader } from "@shared";
-
-export type GameStatus =
-  | "active"
-  | "waiting"
-  | "paused"
-  | "error"
-  | "complete"
-  | "removed";
 
 export type GameShop = "steam" | "epic";
 
@@ -71,6 +64,7 @@ export interface GameRepack {
   uploadDate: Date | string | null;
   createdAt: Date;
   updatedAt: Date;
+  repackLinkSource: string;
 }
 
 export type ShopDetails = SteamAppDetails & {
@@ -113,7 +107,7 @@ export interface Game {
   id: number;
   title: string;
   iconUrl: string;
-  status: GameStatus | null;
+  status: Aria2Status | null;
   folderName: string;
   downloadPath: string | null;
   repacks: GameRepack[];
@@ -149,9 +143,6 @@ export interface DownloadProgress {
   numPeers: number;
   numSeeds: number;
   isDownloadingMetadata: boolean;
-  isCheckingFiles: boolean;
-  progress: number;
-  gameId: number;
   game: LibraryGame;
 }
 
@@ -160,6 +151,7 @@ export interface UserPreferences {
   language: string;
   downloadNotificationsEnabled: boolean;
   repackUpdatesNotificationsEnabled: boolean;
+  repackLinkSourceEnabled: boolean;
   realDebridApiToken: string | null;
   preferQuitInsteadOfHiding: boolean;
   runAtStartup: boolean;
@@ -272,7 +264,6 @@ export interface UserDetails {
 export interface UserProfile {
   id: string;
   displayName: string;
-  username: string;
   profileImageUrl: string | null;
   totalPlayTimeInSeconds: number;
   libraryGames: UserGame[];

@@ -90,21 +90,7 @@ export class HydraApi {
         return response;
       },
       (error) => {
-        logger.error(" ---- RESPONSE ERROR -----");
-
-        const { config } = error;
-
-        logger.error(config.method, config.baseURL, config.url, config.headers);
-
-        if (error.response) {
-          logger.error(error.response.status, error.response.data);
-        } else if (error.request) {
-          logger.error(error.request);
-        } else {
-          logger.error("Error", error.message);
-        }
-
-        logger.error(" ----- END RESPONSE ERROR -------");
+        logger.error("response error", error);
         return Promise.reject(error);
       }
     );
@@ -120,17 +106,10 @@ export class HydraApi {
     };
   }
 
-  private static sendSignOutEvent() {
-    if (WindowManager.mainWindow) {
-      WindowManager.mainWindow.webContents.send("on-signout");
-    }
-  }
-
   private static async revalidateAccessTokenIfExpired() {
     if (!this.userAuth.authToken) {
       userAuthRepository.delete({ id: 1 });
       logger.error("user is not logged in");
-      this.sendSignOutEvent();
       throw new Error("user is not logged in");
     }
 
@@ -160,7 +139,26 @@ export class HydraApi {
           ["id"]
         );
       } catch (err) {
-        this.handleUnauthorizedError(err);
+        if (
+          err instanceof AxiosError &&
+          (err?.response?.status === 401 || err?.response?.status === 403)
+        ) {
+          this.userAuth = {
+            authToken: "",
+            expirationTimestamp: 0,
+            refreshToken: "",
+          };
+
+          userAuthRepository.delete({ id: 1 });
+
+          if (WindowManager.mainWindow) {
+            WindowManager.mainWindow.webContents.send("on-signout");
+          }
+
+          logger.log("user refresh token expired");
+        }
+
+        throw err;
       }
     }
   }
@@ -173,54 +171,28 @@ export class HydraApi {
     };
   }
 
-  private static handleUnauthorizedError = (err) => {
-    if (err instanceof AxiosError && err.response?.status === 401) {
-      this.userAuth = {
-        authToken: "",
-        expirationTimestamp: 0,
-        refreshToken: "",
-      };
-
-      userAuthRepository.delete({ id: 1 });
-
-      this.sendSignOutEvent();
-    }
-
-    throw err;
-  };
-
   static async get(url: string) {
     await this.revalidateAccessTokenIfExpired();
-    return this.instance
-      .get(url, this.getAxiosConfig())
-      .catch(this.handleUnauthorizedError);
+    return this.instance.get(url, this.getAxiosConfig());
   }
 
   static async post(url: string, data?: any) {
     await this.revalidateAccessTokenIfExpired();
-    return this.instance
-      .post(url, data, this.getAxiosConfig())
-      .catch(this.handleUnauthorizedError);
+    return this.instance.post(url, data, this.getAxiosConfig());
   }
 
   static async put(url: string, data?: any) {
     await this.revalidateAccessTokenIfExpired();
-    return this.instance
-      .put(url, data, this.getAxiosConfig())
-      .catch(this.handleUnauthorizedError);
+    return this.instance.put(url, data, this.getAxiosConfig());
   }
 
   static async patch(url: string, data?: any) {
     await this.revalidateAccessTokenIfExpired();
-    return this.instance
-      .patch(url, data, this.getAxiosConfig())
-      .catch(this.handleUnauthorizedError);
+    return this.instance.patch(url, data, this.getAxiosConfig());
   }
 
   static async delete(url: string) {
     await this.revalidateAccessTokenIfExpired();
-    return this.instance
-      .delete(url, this.getAxiosConfig())
-      .catch(this.handleUnauthorizedError);
+    return this.instance.delete(url, this.getAxiosConfig());
   }
 }

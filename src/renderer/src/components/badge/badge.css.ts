@@ -10,4 +10,5 @@ export const badge = style({
   borderRadius: "4px",
   display: "flex",
   alignItems: "center",
+  width: "fit-content"
 });

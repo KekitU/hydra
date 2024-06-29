@@ -45,6 +45,10 @@ const deleteGameFolder = async (
               reject();
             }
 
+            const aria2ControlFilePath = `${folderPath}.aria2`;
+            if (fs.existsSync(aria2ControlFilePath))
+              fs.rmSync(aria2ControlFilePath);
+
             resolve();
           }
         );

@@ -24,6 +24,9 @@ export class UserPreferences {
   downloadNotificationsEnabled: boolean;
 
   @Column("boolean", { default: false })
+  repackLinkSourceEnabled: boolean;
+  
+  @Column("boolean", { default: false })
   repackUpdatesNotificationsEnabled: boolean;
 
   @Column("boolean", { default: false })

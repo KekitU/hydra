@@ -10,8 +10,6 @@ export function SettingsBehavior() {
     (state) => state.userPreferences.value
   );
 
-  const [showRunAtStartup, setShowRunAtStartup] = useState(false);
-
   const { updateUserPreferences } = useContext(settingsContext);
 
   const [form, setForm] = useState({
@@ -30,12 +28,6 @@ export function SettingsBehavior() {
     }
   }, [userPreferences]);
 
-  useEffect(() => {
-    window.electron.isPortableVersion().then((isPortableVersion) => {
-      setShowRunAtStartup(!isPortableVersion);
-    });
-  }, []);
-
   const handleChange = (values: Partial<typeof form>) => {
     setForm((prev) => ({ ...prev, ...values }));
     updateUserPreferences(values);
@@ -53,16 +45,14 @@ export function SettingsBehavior() {
         }
       />
 
-      {showRunAtStartup && (
-        <CheckboxField
-          label={t("launch_with_system")}
-          onChange={() => {
-            handleChange({ runAtStartup: !form.runAtStartup });
-            window.electron.autoLaunch(!form.runAtStartup);
-          }}
-          checked={form.runAtStartup}
-        />
-      )}
+      <CheckboxField
+        label={t("launch_with_system")}
+        onChange={() => {
+          handleChange({ runAtStartup: !form.runAtStartup });
+          window.electron.autoLaunch(!form.runAtStartup);
+        }}
+        checked={form.runAtStartup}
+      />
     </>
   );
 }

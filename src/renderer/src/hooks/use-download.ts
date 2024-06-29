@@ -22,14 +22,13 @@ export function useDownload() {
   );
   const dispatch = useAppDispatch();
 
-  const startDownload = (payload: StartGameDownloadPayload) => {
-    dispatch(clearDownload());
+  const startDownload = (payload: StartGameDownloadPayload) =>
     window.electron.startGameDownload(payload).then((game) => {
+      dispatch(clearDownload());
       updateLibrary();
 
       return game;
     });
-  };
 
   const pauseDownload = async (gameId: number) => {
     await window.electron.pauseGameDownload(gameId);
@@ -66,7 +65,7 @@ export function useDownload() {
       updateLibrary();
     });
 
-  const calculateETA = () => {
+  const getETA = () => {
     if (!lastPacket || lastPacket.timeRemaining < 0) return "";
 
     try {
@@ -86,9 +85,9 @@ export function useDownload() {
 
   return {
     downloadSpeed: `${formatBytes(lastPacket?.downloadSpeed ?? 0)}/s`,
-    progress: formatDownloadProgress(lastPacket?.progress ?? 0),
+    progress: formatDownloadProgress(lastPacket?.game.progress),
     lastPacket,
-    eta: calculateETA(),
+    eta: getETA(),
     startDownload,
     pauseDownload,
     resumeDownload,

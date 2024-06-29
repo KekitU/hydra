@@ -9,8 +9,9 @@ import {
 } from "typeorm";
 import { Repack } from "./repack.entity";
 
-import type { GameShop, GameStatus } from "@types";
+import type { GameShop } from "@types";
 import { Downloader } from "@shared";
+import type { Aria2Status } from "aria2";
 import type { DownloadQueue } from "./download-queue.entity";
 
 @Entity("game")
@@ -46,7 +47,7 @@ export class Game {
   shop: GameShop;
 
   @Column("text", { nullable: true })
-  status: GameStatus | null;
+  status: Aria2Status | null;
 
   @Column("int", { default: Downloader.Torrent })
   downloader: Downloader;
