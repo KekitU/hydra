@@ -111,12 +111,6 @@ export function RepacksModal({
               </p>
               <div className={styles.torrentDataContainer}>
                 <div className={styles.badgesContainer}>
-                  {supportMultiLanguage(repack.title) && (
-                    <Badge>{t("multi_language")}</Badge>
-                  )}
-                  {isMultiplayerRepack(repack.title, repack.repacker) && (
-                    <Badge>{t("multiplayer")}</Badge>
-                  )}
                   {repack.magnet.toLowerCase().includes(infoHash) && (
                     <Badge>{t("last_downloaded_option")}</Badge>
                   )}
