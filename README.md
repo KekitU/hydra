@@ -4,11 +4,22 @@
 
 [<img src="./resources/icon.png" width="144"/>](https://hydralauncher.site)
 
-  <h1 align="center">Hydra Launcher</h1>
+  <h1 align="center">Hydra Launcher Unofficial</h1>
+  
+  ## Attention | Внимание
+  
+  It is **fork** with implementation of some declined by devs features, such as **repack source links and seeds/peers** on repacks page (still doesn't work sometimes)\
+  To see the sources for repacks you need to enable the setting corresponding to this and add a JSON file supporting this to the sources.\
+  **For example RuTracker:** [Link](https://raw.githubusercontent.com/KekitU/test/main/all_categories.json)
+
+  Это **форк** с реализацией некоторых отклоненных разработчиками функций, таких как **ссылки на источники репаков и сиды/пиры** на странице репаков (все еще иногда не работает)\
+  Чтобы увидеть исходники репаков, вам нужно включить соответствующую настройку и добавить JSON-файл, поддерживающий это, в sources.\
+  **Например RuTracker:** [Ссылка](https://raw.githubusercontent.com/KekitU/test/main/all_categories.json)
   
   <p align="center">
-    <strong>Hydra is a game launcher with its own embedded bittorrent client and a self-managed repack scraper.</strong>
+        <strong>Hydra is a game launcher with its own embedded bittorrent client and a self-managed repack scraper.</strong>
   </p>
+
 
 [![build](https://img.shields.io/github/actions/workflow/status/hydralauncher/hydra/build.yml)](https://github.com/hydralauncher/hydra/actions)
 [![release](https://img.shields.io/github/package-json/v/hydralauncher/hydra)](https://github.com/hydralauncher/hydra/releases)
