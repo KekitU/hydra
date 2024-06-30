@@ -37,4 +37,7 @@ export class UserPreferences {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column("boolean", { default: false })
+  repackLinkSourceEnabled: boolean;
 }

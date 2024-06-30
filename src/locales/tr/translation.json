@@ -82,7 +82,8 @@
     "copied_to_clipboard": "Kopyalandı",
     "got_it": "Tamam",
     "multi_language": "Çoklu Dil",
-    "multiplayer": "Çok Oyunculu"  },
+    "multiplayer": "Çok Oyunculu"
+  },
   "activation": {
     "title": "Hydra'yı aktif et",
     "installation_id": "Kurulum ID'si:",

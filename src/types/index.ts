@@ -71,6 +71,7 @@ export interface GameRepack {
   uploadDate: Date | string | null;
   createdAt: Date;
   updatedAt: Date;
+  repackLinkSource: string;
 }
 
 export type ShopDetails = SteamAppDetails & {
@@ -163,6 +164,7 @@ export interface UserPreferences {
   realDebridApiToken: string | null;
   preferQuitInsteadOfHiding: boolean;
   runAtStartup: boolean;
+  repackLinkSourceEnabled: boolean;
 }
 
 export interface HowLongToBeatCategory {

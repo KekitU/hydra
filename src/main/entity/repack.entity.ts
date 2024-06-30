@@ -42,4 +42,7 @@ export class Repack {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column("text", { nullable: true })
+  repackLinkSource: string;
 }

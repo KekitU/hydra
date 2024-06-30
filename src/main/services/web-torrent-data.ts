@@ -6,7 +6,7 @@ type WebTorrentHealthData = {
 };
 
 const MILLISECONDS = 1000;
-const SECONDS = 1.5;
+const SECONDS = 5;
 
 export const webTorrentData = {
   async getSeedersAndPeers(
@@ -17,7 +17,7 @@ export const webTorrentData = {
     let retry = 0;
     let timeout = SECONDS * MILLISECONDS;
 
-    while (retry < 3) {
+    while (retry < 5) {
       try {
         const data: WebTorrentHealthData = await webTorrentHealth(magnet, {
           timeout,

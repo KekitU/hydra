@@ -8,6 +8,7 @@ export const downloadSourceSchema = z.object({
       uris: z.array(z.string()),
       uploadDate: z.string().max(255),
       fileSize: z.string().max(255),
+      repackLinkSource: z.string().optional(),
     })
   ),
 });
