@@ -22,6 +22,7 @@ export const insertDownloadsFromSource = async (
       repacker: downloadSource.name,
       uploadDate: download.uploadDate,
       downloadSource: { id: downloadSource.id },
+      repackLinkSource: download.repackLinkSource,
     })
   );
 

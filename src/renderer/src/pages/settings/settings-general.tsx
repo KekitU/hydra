@@ -34,6 +34,7 @@ export function SettingsGeneral() {
     downloadsPath: "",
     downloadNotificationsEnabled: false,
     repackUpdatesNotificationsEnabled: false,
+    repackLinkSourceEnabled: false,
     language: "",
   });
 
@@ -102,6 +103,7 @@ export function SettingsGeneral() {
           userPreferences.downloadNotificationsEnabled,
         repackUpdatesNotificationsEnabled:
           userPreferences.repackUpdatesNotificationsEnabled,
+        repackLinkSourceEnabled: userPreferences.repackLinkSourceEnabled,
         language: parsedLanguage,
       }));
     }
@@ -151,6 +153,20 @@ export function SettingsGeneral() {
             handleChange({
               repackUpdatesNotificationsEnabled:
                 !form.repackUpdatesNotificationsEnabled,
+            })
+          }
+        />
+      </>
+
+      <h3>{"Insecure options"}</h3>
+      <>
+        <CheckboxField
+          label={"Repack source link"}
+          checked={form.repackLinkSourceEnabled}
+          theme="danger"
+          onChange={() =>
+            handleChange({
+              repackLinkSourceEnabled: !form.repackLinkSourceEnabled,
             })
           }
         />
