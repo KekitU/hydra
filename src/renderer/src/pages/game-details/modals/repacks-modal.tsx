@@ -121,6 +121,8 @@ export function RepacksModal({
                       : ""}
                   </p>
                 </div>
+                <div style={{display: "flex", flexDirection: "column-reverse", justifyContent: "space-between", alignItems: "flex-end", placeSelf: "stretch" }}>
+                <SeedersAndPeers repack={repack} />
                 {repack.repackLinkSource &&
                   userPreferences?.repackLinkSourceEnabled && (
                     <Button
@@ -161,7 +163,7 @@ export function RepacksModal({
                       </Link>
                     </Button>
                   )}
-                <SeedersAndPeers repack={repack} />
+                </div>
               </Button>
             );
           })}
