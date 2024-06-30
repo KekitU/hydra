@@ -15,7 +15,7 @@ export const repackButton = style({
   gap: `${SPACING_UNIT}px`,
   color: vars.color.body,
   padding: `${SPACING_UNIT * 2}px`,
-  justifyContent: "normal"
+  justifyContent: "normal",
 });
 
 export const repackContent = style({
@@ -28,8 +28,8 @@ export const repackContent = style({
 export const repackLinkButton = style({
   top: `${SPACING_UNIT}px`,
   right: `${SPACING_UNIT}px`,
-//  borderColor: vars.color.border,
-  width: "40px"
+  //  borderColor: vars.color.border,
+  width: "40px",
 });
 
 export const torrentDataContainer = style({

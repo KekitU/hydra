@@ -103,8 +103,7 @@ export function SettingsGeneral() {
           userPreferences.downloadNotificationsEnabled,
         repackUpdatesNotificationsEnabled:
           userPreferences.repackUpdatesNotificationsEnabled,
-        repackLinkSourceEnabled:
-          userPreferences.repackLinkSourceEnabled,
+        repackLinkSourceEnabled: userPreferences.repackLinkSourceEnabled,
         language: parsedLanguage,
       }));
     }
@@ -161,14 +160,13 @@ export function SettingsGeneral() {
 
       <h3>{"Insecure options"}</h3>
       <>
-      <CheckboxField
+        <CheckboxField
           label={"Repack source link"}
           checked={form.repackLinkSourceEnabled}
           theme="danger"
           onChange={() =>
             handleChange({
-              repackLinkSourceEnabled:
-                !form.repackLinkSourceEnabled,
+              repackLinkSourceEnabled: !form.repackLinkSourceEnabled,
             })
           }
         />
