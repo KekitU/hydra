@@ -15,7 +15,7 @@ export const repackButton = style({
   gap: `${SPACING_UNIT}px`,
   color: vars.color.body,
   padding: `${SPACING_UNIT * 2}px`,
-  justifyContent: "normal",
+  justifyContent: "space-between",
 });
 
 export const repackContent = style({
